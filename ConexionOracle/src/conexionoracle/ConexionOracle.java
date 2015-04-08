@@ -1,21 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package conexionoracle;
 
-/**
- *
- * @author alumno04
- */
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 public class ConexionOracle {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
+       if(Conexion.conectar()==null){
+           System.out.println("La conexion Fallo!!!!!.");
+       }else{
+           System.out.println("La conexion fue Exitosa!!!!!.");
+           try {
+               Statement st=Conexion.conectar().createStatement();
+               ResultSet rs=st.executeQuery("SELECT * FROM persona");
+               while (rs.next()) {                   
+                   System.out.println("ID:"+rs.getInt("idpersona")+
+                   " NOMBRE:"+rs.getString("nombre")+
+                   " APELLIDOS PATERNO: "+rs.getString("apellido_pat")+
+                   " APELLIDOS MATERNO: "+rs.getString("apellido_mat")+
+                   " DNI: "+rs.getString("dni"));
+               }
+           } catch (Exception e) {
+           }
+           
+       }
     }
     
 }
